@@ -13,9 +13,12 @@ secret_number = random.randint(1,100)
 guessed_count = 0
 
 while True:
-        
-    guess = int(input("Enter your guess "))
     
+    try:    
+        guess = int(input("Enter your guess "))
+    except:
+        print ("That is not an integer!")
+        continue
 
     if guess < 1 or guess > 100:
         print ('your guess is out of range')
