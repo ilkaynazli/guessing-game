@@ -1,18 +1,26 @@
 """A number-guessing game."""
 
+
 # Put your code here
+import random
 print ('Hello Player!')
 name = input("What's your name : ").title()
 print("Welcome {} to the number guessing Game ".format(name))
 
-import random
+
 
 secret_number = random.randint(1,100)
 guessed_count = 0
 
 while True:
-    guessed_count+=1
+        
     guess = int(input("Enter your guess "))
+    
+
+    if guess < 1 or guess > 100:
+        print ('your guess is out of range')
+        continue
+    guessed_count+=1
     if guess == secret_number:
         print("Yay, You Guessed Correct")
         break
