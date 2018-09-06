@@ -11,6 +11,7 @@ print("Welcome {} to the number guessing Game ".format(name))
 def guess_the_number():
     secret_number = random.randint(1,100)
     guessed_count = 0
+    best_score = 100
 
     while True:
     
@@ -34,24 +35,23 @@ def guess_the_number():
         
 
     print ("You have guessed {} times" .format(guessed_count))
+    if guessed_count < best_score:
+        best_score = guessed_count
+    return best_score
 
-guess_the_number()
+
+best_score = guess_the_number()
+
+
 
 def choice():
     while True:
-        choice_user = input("Would you like to play again? ").lower()
+        choice_user = input("Would you like to play again? Y or N:").lower()
         if choice_user == 'y':
             guess_the_number()
         else:
-            print('thank you for playing.')
+            print('It was fun to play. See you again later')
+            print("Your Best Score was {}".format(best_score))
             break
 
 choice()
-
-# while True:
-#     choice_user = input("Would you like to play again? Y or N: ")
-#     if choice_user == 'N':
-#         print ('It was fun to play. See you again later.')
-#         break
-#     else:
-#         guess_the_number()
