@@ -3,19 +3,16 @@
 
 # Put your code here
 import random
-print ('Hello Player!')
-name = input("What's your name? ").title()
-print("Welcome {} to the number guessing game ".format(name))
+
 
 def get_range():
     print ("Let's find out our range for the game.")
     low_limit = int(input("Please enter the lower limit: "))
     high_limit = int(input("Please enter the higher limit: "))
-    range_of_game = high_limit - low_limit
-    return (low_limit, high_limi, range_of_game)
+    return (low_limit, high_limit)
 
-def guess_the_number():
-    (low, high, best_score) = get_range()
+def guess_the_number(points):
+    (low, high) = get_range()
     secret_number = random.randint(low, high)
     guessed_count = 0
     limit = 15
@@ -37,6 +34,7 @@ def guess_the_number():
             break
         if guess == secret_number:
             print("Yay, your guess is correct! Congratulations!")
+            points.append(guessed_count*(high-low))
             break
         elif guess < secret_number:
             print("Guess is too low.")
@@ -45,23 +43,54 @@ def guess_the_number():
         
 
     print ("You have guessed {} times" .format(guessed_count))
-    if guessed_count < best_score:
-        best_score = guessed_count
-    return best_score
+    
+    return guessed_count
 
+def computer_guesses_the_number():
+    (low,high) = get_range()
+    print ("Please select a number and I will try to guess it.")
+    print ("Don't tell me until I guess it correctly.")
+    while True:
+        guess = random.randint(low,high)
+        print ("I have guessed {}." .format(guess))
+        user_input = input("Is this high or low? ").lower()
+        if user_input == 'high':
+            high = guess
+        elif user_input == 'low':
+            low = guess 
+        else:
+            print ("Your number was {}! I won!" .format(guess))
+            break
 
-best_score = guess_the_number()
-
-
-
-def choice():
+def player_guesses_the_number():
+    points = []
+    best_score = guess_the_number(points)
+    
     while True:
         choice_user = input("Would you like to play again? Y or N:").lower()
         if choice_user == 'y' or choice_user == 'yes':
-            best_score = guess_the_number()
+            score = guess_the_number(points)
+            if score < best_score:
+                best_score = score
+
         else:
             print('It was fun to play. See you again later')
             print("Your Best Score was {}".format(best_score))
+            print (points)
             break
 
-choice()
+def main():
+    
+    print ('Hello Player!')
+    name = input("What's your name? ").title()
+    print("Welcome {} to the number guessing game ".format(name))
+    
+    print("We can play 2 different games: I can guess or you can guess.")
+    player = input('Would you like me to guess? If so press Y: ').lower()
+    if player == 'y' or player == 'yes':
+        computer_guesses_the_number()
+    else:
+        player_guesses_the_number()
+    
+
+main()
